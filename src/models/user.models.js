@@ -1,10 +1,12 @@
 const mongoose = require("mongoose");
 
+
+//create user schema
 const userSchema = new mongoose.Schema({
   userName: {
     type: String,
     unique: [true, "userName is already exists"],
-    required: [true, "userName is required"],
+    required: [true, "user is required"],
   },
   email: {
     type: String,
@@ -18,10 +20,16 @@ const userSchema = new mongoose.Schema({
   bio: String,
   profileImage: {
     type: String,
-    default:"https://ik.imagekit.io/6pzg4qptd/insta-clone-default-pic/default-avatar-profile-icon-social-media-user-image-gray-avatar-icon-blank-profile-silhouette-vector-illustration_561158-3407.avif?updatedAt=1770874757290",
+    default:
+      "https://ik.imagekit.io/6pzg4qptd/insta-clone-default-pic/default-avatar-profile-icon-social-media-user-image-gray-avatar-icon-blank-profile-silhouette-vector-illustration_561158-3407.avif?updatedAt=1770874757290",
   },
 });
 
+
+//create models 
 const userModels = mongoose.model("user", userSchema);
 
+
+
+//exports models
 module.exports = userModels;
