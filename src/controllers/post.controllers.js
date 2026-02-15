@@ -7,7 +7,7 @@ const imageKit = new ImageKit({
   privateKey: process.env.IMAGEKIT_PRIVATE_KEY,
 });
 
-async function postControllers(req, res) {
+async function createPostControllers(req, res) {
   // const token  = req.cookies("token")
   const token = req.cookies.token;
 
@@ -44,4 +44,20 @@ async function postControllers(req, res) {
   });
 }
 
-module.exports = postControllers;
+async function getPostControllers(req,res){
+const token  = req.cookies.tokens;
+if(!token){
+  res.status(401).json({
+    message:"unthorized user"
+  })
+}
+
+
+}
+
+
+
+module.exports = {
+createPostControllers,
+  getPostControllers
+};
