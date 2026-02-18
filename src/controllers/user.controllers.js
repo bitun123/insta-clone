@@ -13,6 +13,7 @@ async function registrationControllers(req, res) {
     });
   }
 
+  
   const hash = bcrypt.hashSync(password, 10);
   const user = await userModels.create({
     userName,

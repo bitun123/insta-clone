@@ -10,6 +10,8 @@ const followRoute = express.Router();
 */
 followRoute.post("/follow/:userId",identifyUser,userController.followController)
 followRoute.post("/unfollow/:userId",identifyUser,userController.unFollowController)
+followRoute.post("/accept/:userId",identifyUser,userController.acceptController)
+followRoute.post("/rejected/:userId",identifyUser,userController.rejectedController)
 
 
 module.exports  = followRoute;
