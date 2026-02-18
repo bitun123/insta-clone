@@ -9,6 +9,9 @@ postRouter.post("/", upload.single("image"),identifyUser, postControllers.create
 
 postRouter.get("/",identifyUser, postControllers.getPostControllers);
 
-postRouter.get("/details/:postId",identifyUser, postControllers.getPostDetailsControllers)
+postRouter.get("/details/:postId",identifyUser, postControllers.getPostDetailsControllers);
+
+
+postRouter.post("/likes/:postId",identifyUser,postControllers.likesControllers)
 
 module.exports = postRouter;

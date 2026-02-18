@@ -9,6 +9,7 @@ const followRoute = express.Router();
  * @access private
 */
 followRoute.post("/follow/:userId",identifyUser,userController.followController)
+followRoute.post("/unfollow/:userId",identifyUser,userController.unFollowController)
 
 
 module.exports  = followRoute;
