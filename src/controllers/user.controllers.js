@@ -74,7 +74,12 @@ async function loginControllers(req, res) {
   });
 }
 
+async function getControllers(req,res){
+
+}
+
 module.exports = {
   registrationControllers,
-  loginControllers
+  loginControllers,
+  getControllers
 };
