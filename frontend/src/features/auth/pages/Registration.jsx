@@ -6,7 +6,7 @@ function Registration() {
   const { loading, handleRegister } = useAuth();
   const navigate = useNavigate();
 
-  const [username, setUserName] = useState("");
+  const [userName, setuserName] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
 
@@ -16,11 +16,11 @@ function Registration() {
       return <h1>Loading.......</h1>;
     }
 
-    const res = await handleRegister(username, email, password);
-    console.log(res.data);
-    navigate("/login");
+    const res = await handleRegister(userName, email, password);
+    console.log(res);
+    navigate("/");
 
-    setUserName("");
+    setuserName("");
     setEmail("");
     setPassword("");
   };
@@ -33,12 +33,12 @@ function Registration() {
       <form onSubmit={(e) => handleSubmit(e)} className="flex flex-col gap-4">
         <input
 
-        value={username}
+        value={userName}
           onChange={(e) => {
-            setUserName(e.target.value);
+            setuserName(e.target.value);
           }}
           type="text"
-          name="UserName"
+          name="userName"
           placeholder="enter your name"
           className="bg-gray-300 border-none outline-none rounded-4xl px-3 py-2 text-black font-semibold text-xl"
         />

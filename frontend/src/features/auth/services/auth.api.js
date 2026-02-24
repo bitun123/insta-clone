@@ -5,12 +5,12 @@ const api = axios.create({
   withCredentials: true,
 });
 
-export async function registration(username, email, password) {
+export async function registration(userName, email, password) {
     const response = await api.post('/registration', {
-        username, email, password
+        userName, email, password
     })
 
-    return response.data
+    return response.user
 }
 
 export async function login(userName, password) {

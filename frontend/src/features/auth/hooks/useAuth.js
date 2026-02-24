@@ -9,10 +9,10 @@ export const useAuth = () => {
 
     const { user, setUser, loading, setLoading } = context
 
- const handleLogin = async (username, password) => {
+ const handleLogin = async (userName, password) => {
             setLoading(true);
             try {
-                const response = await login(username, password);
+                const response = await login(userName, password);
 
                 // Check if response and response.user exist
                 if (response && response.user) {
@@ -34,10 +34,10 @@ export const useAuth = () => {
             }
         };
 
-    const handleRegister = async (username, email, password) => {
+    const handleRegister = async (userName, email, password) => {
 
         setLoading(true)
-        const response = await registration(username, email, password)
+        const response = await registration(userName, email, password)
         setUser(response.user)
 
         setLoading(false)
