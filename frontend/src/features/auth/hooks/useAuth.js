@@ -16,7 +16,7 @@ export const useAuth = () => {
 
                 // Check if response and response.user exist
                 if (response && response.user) {
-                    setUser(response.user);
+                    setUser(response?.user);
                 } else {
                     // Handle cases where response is not as expected (e.g., login failed, no user property)
                     console.error("Login failed or unexpected response:", response);
