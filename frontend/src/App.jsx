@@ -1,10 +1,13 @@
 import React from "react";
 import AppRoutes from "./AppRoutes";
-import {AuthProvider} from "./features/auth/context/AuthProvider";
+import { AuthProvider } from "./features/auth/context/AuthProvider";
+import PostContextProvider from "./features/post/context/postContext";
 function App() {
   return (
     <AuthProvider>
-      <AppRoutes />
+      <PostContextProvider>
+        <AppRoutes />
+      </PostContextProvider>
     </AuthProvider>
   );
 }

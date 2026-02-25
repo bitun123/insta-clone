@@ -2,7 +2,7 @@ const postModels = require("../models/post.models");
 const ImageKit = require("@imagekit/nodejs");
 const { toFile } = require("@imagekit/nodejs");
 const jwt = require("jsonwebtoken");
-const likesModels = require("../models/like.models")
+const likesModels = require("../models/like.models");
 
 const imageKit = new ImageKit({
   privateKey: process.env.IMAGEKIT_PRIVATE_KEY,
@@ -51,32 +51,32 @@ async function getPostDetailsControllers(req, res) {
 
 
 
-const userId  = req.user.id;
-const postId = req.params.postId;
-const post = await postModels.findById(postId);
-if(!post){
-  return res.status(404).json({
-    message:"there are no post"
+  const userId = req.user.id;
+  const postId = req.params.postId;
+  const post = await postModels.findById(postId);
+  if (!post) {
+    return res.status(404).json({
+      message: "there are no post"
+    })
+  }
+
+  const isValidUser = post.user.toString() === userId;
+  if (!isValidUser) {
+    return res.status(403).json({
+      message: "forbidden content "
+    })
+  }
+
+
+  return res.status(200).json({
+    message: "post Fetch Successfully",
+    post
   })
-}
-
-const isValidUser = post.user.toString() === userId;
-if(!isValidUser){
-  return res.status(403).json({
-    message :"forbidden content "
-  })
-}
-
-
-return res.status(200).json({
-  message:"post Fetch Successfully",
-  post
-})
 
 }
 
 
-async function likesControllers(req,res){
+async function likesControllers(req, res) {
 
 
   const userId = req.user.id;
@@ -84,25 +84,37 @@ async function likesControllers(req,res){
 
 
   const posts = await postModels.findById(postId);
-  if(!posts){
+  if (!posts) {
     return res.status(400).json({
-      message : "post not found"
+      message: "post not found"
     })
   }
 
 
   const like = await likesModels.create({
-    user : userId,
-    post:postId
+    user: userId,
+    post: postId
   })
 
 
   res.status(201).json({
-    message : "post liked Successfully",
+    message: "post liked Successfully",
     like
   })
 
 }
+
+
+async function getFeedController(req, res) {
+  const posts = await postModels.find().populate("user")
+
+  res.status(200).json({
+    message: "Post fetched successfully",
+    posts
+  })
+
+}
+
 
 
 
@@ -111,5 +123,6 @@ module.exports = {
   createPostControllers,
   getPostControllers,
   getPostDetailsControllers,
-  likesControllers
+  likesControllers,
+  getFeedController
 };

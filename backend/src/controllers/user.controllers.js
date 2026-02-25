@@ -44,7 +44,7 @@ async function loginControllers(req, res) {
   const { userName, email, password } = req.body;
   const user = await userModels.findOne({
     $or: [{ userName }, { email }],
-  });
+  }).select("+password")
   if (!user) {
     return res.status(401).json({
       message: "user not exists",

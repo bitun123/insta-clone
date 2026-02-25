@@ -10,7 +10,7 @@ export async function registration(userName, email, password) {
         userName, email, password
     })
 
-    return response.user
+    return response
 }
 
 export async function login(userName, password) {

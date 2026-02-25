@@ -18,7 +18,7 @@ function Registration() {
 
     const res = await handleRegister(userName, email, password);
     console.log(res);
-    navigate("/");
+    navigate("/login");
 
     setuserName("");
     setEmail("");
@@ -33,7 +33,7 @@ function Registration() {
       <form onSubmit={(e) => handleSubmit(e)} className="flex flex-col gap-4">
         <input
 
-        value={userName}
+          value={userName}
           onChange={(e) => {
             setuserName(e.target.value);
           }}
@@ -43,7 +43,7 @@ function Registration() {
           className="bg-gray-300 border-none outline-none rounded-4xl px-3 py-2 text-black font-semibold text-xl"
         />
         <input
-        value={email}
+          value={email}
           onChange={(e) => setEmail(e.target.value)}
           type="text"
           name="email"
@@ -51,7 +51,7 @@ function Registration() {
           className="bg-gray-300 border-none outline-none rounded-4xl px-3 py-2 text-black font-semibold text-xl"
         />
         <input
-        value={password}
+          value={password}
           onChange={(e) => setPassword(e.target.value)}
           type="text"
           name="password"

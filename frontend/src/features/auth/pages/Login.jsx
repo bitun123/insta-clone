@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { useAuth } from "../hooks/useAuth";
 
 function Login() {
@@ -7,6 +7,7 @@ function Login() {
   const [password, setpassword] = useState("");
 
   const { handleLogin, Loading,user } = useAuth();
+const navigate = useNavigate();
 
   if (Loading) {
     return <h1>Loading.......</h1>;
@@ -15,7 +16,8 @@ function Login() {
   const handleSubmit = async (e) => {
     e.preventDefault();
    await handleLogin(userName, password);
-    console.log(user);
+   navigate("/");
+ 
   };
 
   return (
