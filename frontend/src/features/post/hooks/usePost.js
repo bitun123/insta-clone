@@ -1,21 +1,90 @@
-import { getFeed } from "../services/post.api";
 import { useContext } from "react";
+import {
+  createPost,
+  getFeed,
+  likePost,
+  getPostDetails,
+  getMyPosts,
+} from "../services/post.api";
 import { PostContext } from "../context/PostContextProvider";
+export const usePost = () => {
+  const context = useContext(PostContext);
+  const {
+    loading,
+    setLoading,
+    posts,
+    setPosts,
+    feed,
+    setFeed,
+    postDetails,
+    setpostDetails,
+  } = context;
 
+  const handleCreatePost = async ({ image, caption }) => {
+    try {
+      setLoading(true);
+      const response = await createPost({ image, caption });
+      return response;
+    } catch (error) {
+      console.error("Create Post API call failed:", error);
+    } finally {
+      setLoading(false);
+    }
+  };
 
-export const  usePost = ()=>{
-const context = useContext(PostContext)
+  const handleGetFeed = async () => {
+    try {
+      setLoading(true);
+      const response = await getFeed();
+      setFeed(response.posts);
+      return response;
+    } catch (error) {
+      console.error("Get Feed API call failed:", error);
+    } finally {
+      setLoading(false);
+    }
+  };
 
-const {loading,setLoading,posts,setPosts,feed,setFeed}  = context;
+  const handleLikePost = async (postId) => {
+    try {
+      const response = await likePost(postId);
+      return response;
+    } catch (error) {
+      console.error("Like Post API call failed:", error);
+    }
+  };
 
-const handleGetFeed  = async()=>{
-    setLoading(true)
-const data = await getFeed()
-setFeed(data.posts)
-setLoading(false)
+  const handleGetPostDetails = async (postId) => {
+    try {
+      const response = await getPostDetails(postId);
+      setpostDetails(response.post);
+      return response;
+    } catch (error) {
+      console.error("Get Post Details API call failed:", error);
+    }
+  };
 
-}
-
-
-return{loading,feed,posts,handleGetFeed}
-}
+  const handleGetMyPosts = async () => {
+    try {
+      setLoading(true);
+      const response = await getMyPosts();
+      setPosts(response.posts);
+      return response;
+    } catch (error) {
+      console.error("Get My Posts API call failed:", error);
+    } finally {
+      setLoading(false);
+    }
+  };
+  return {
+    loading,
+    posts,
+    feed,
+    postDetails,
+    handleCreatePost,
+    handleGetFeed,
+    handleLikePost,
+    handleGetPostDetails,
+    handleGetMyPosts,
+  };
+};
