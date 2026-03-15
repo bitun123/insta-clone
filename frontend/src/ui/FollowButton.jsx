@@ -5,8 +5,7 @@ function FollowButton({ isFollowing = false, onClick, className = "" }) {
     <button 
       type="button" 
       onClick={onClick}
-      className={`ui-follow-btn ${className}`}
-      style={{ color: isFollowing ? "#a8a8a8" : "" }}
+      className={`bg-none border-none text-blue-400 text-xs font-bold cursor-pointer whitespace-nowrap transition-colors duration-150 hover:text-blue-600 ${isFollowing ? "text-gray-500" : ""} ${className}`}
     >
       {isFollowing ? "Following" : "Follow"}
     </button>

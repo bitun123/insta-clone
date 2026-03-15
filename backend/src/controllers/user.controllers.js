@@ -14,7 +14,6 @@ async function registrationControllers(req, res) {
     });
   }
 
-  
   const hash = bcrypt.hashSync(password, 10);
   const user = await userModels.create({
     userName,
@@ -47,9 +46,11 @@ async function registrationControllers(req, res) {
 
 async function loginControllers(req, res) {
   const { userName, email, password } = req.body;
-  const user = await userModels.findOne({
-    $or: [{ userName }, { email }],
-  }).select("+password")
+  const user = await userModels
+    .findOne({
+      $or: [{ userName }, { email }],
+    })
+    .select("+password");
   if (!user) {
     return res.status(401).json({
       message: "user not exists",
@@ -83,36 +84,54 @@ async function loginControllers(req, res) {
   });
 }
 
-async function getControllers(req,res){
-try{
-  const userId = req.user.id;
-  const user = await userModels.findById(userId).lean();
-  if(!user){
-    return res.status(404).json({
-      message: "user not found"
-    })
+async function getControllers(req, res) {
+  try {
+    const userId = req.user.id;
+    const user = await userModels.findById(userId).lean();
+    if (!user) {
+      return res.status(404).json({
+        message: "user not found",
+      });
+    }
+
+    const followingRecords = await followModels.find({ follower: userId });
+    const following = followingRecords.map((record) => record.followee);
+
+    res.status(200).json({
+      message: "user found",
+      user,
+      following,
+    });
+  } catch (error) {
+    console.error("GetMe controller error:", error);
+    res.status(500).json({
+      message: "internal server error",
+    });
   }
-  
-  const followingRecords = await followModels.find({ follower: userId });
-  const following = followingRecords.map(record => record.followee);
-
-  res.status(200).json({
-    message: "user found",
-    user,
-    following
-  })
-}
-catch(error){
-  console.error("GetMe controller error:", error);
-  res.status(500).json({
-    message: "internal server error"
-  })  
-}
 }
 
-
+async function logoutControllers(req, res) {
+  try {
+    const token = req.cookies.token;
+    if (!token) {
+      return res.status(401).json({
+        message: "Unauthorized",
+      });
+    }
+    res.clearCookie("token");
+    res.status(200).json({
+      message: "logout successfully",
+    });
+  } catch (error) {
+    console.error("Logout controller error:", error);
+    res.status(500).json({
+      message: "internal server error",
+    });
+  }
+}
 module.exports = {
   registrationControllers,
   loginControllers,
-  getControllers
+  getControllers,
+  logoutControllers,
 };

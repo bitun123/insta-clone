@@ -22,18 +22,18 @@ function RightSidebar() {
   const followingList = User?.following || [];
 
   return (
-    <aside className="right-sidebar">
+    <aside className="sticky top-0 h-screen overflow-y-auto px-5 py-6 bg-black scrollbar-hide hidden xl:block">
       {/* Current user */}
       <UserProfileCard />
 
       {/* Suggestions header */}
-      <div className="suggested-header">
-        <span className="suggested-title">Suggested for you</span>
-        <button className="suggested-see-all" type="button">See All</button>
+      <div className="flex items-center justify-between mb-3">
+        <span className="text-xs font-semibold text-gray-500">Suggested for you</span>
+        <button className="bg-none border-none text-gray-100 text-xs font-bold cursor-pointer transition-opacity duration-150 hover:opacity-70" type="button">See All</button>
       </div>
 
       {/* Suggested users list */}
-      <div className="suggested-list">
+      <div className="flex flex-col gap-3.5 mb-6">
         {SUGGESTED.map((user) => {
           const isFollowing = followingList.includes(user.userId);
           return (
@@ -50,16 +50,16 @@ function RightSidebar() {
       </div>
 
       {/* Footer links */}
-      <div className="right-footer">
+      <div className="flex flex-wrap gap-1 mt-4">
         {FOOTER_LINKS.map((link, i) => (
-          <span key={link} className="right-footer-link">
+          <span key={link} className="text-xs text-gray-500 cursor-pointer whitespace-nowrap hover:underline">
             {link}
             {i < FOOTER_LINKS.length - 1 && (
-              <span className="right-footer-dot">·</span>
+              <span className="ml-1 text-gray-500">·</span>
             )}
           </span>
         ))}
-        <p className="right-footer-copy">© 2024 INSTAGRAM FROM META</p>
+        <p className="w-full text-xs text-gray-700 mt-2.5 tracking-widest uppercase">© 2024 INSTAGRAM FROM META</p>
       </div>
     </aside>
   );

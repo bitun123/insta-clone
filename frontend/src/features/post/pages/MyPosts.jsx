@@ -21,59 +21,48 @@ function MyPosts() {
       animate={{ opacity: 1 }}
       exit={{ opacity: 0 }}
       transition={{ duration: 0.3 }}
-      className="feed-wrapper"
+      className="w-full max-w-[470px] flex flex-col"
     >
       {/* Section header */}
-      <div style={{
-        padding: "14px 0",
-        textAlign: "center",
-        borderBottom: "1px solid #262626",
-        fontWeight: 700,
-        fontSize: 16,
-        color: "#f5f5f5",
-        width: "100%",
-        marginBottom: 8
-      }}>
+      <div className="py-3.5 text-center border-b border-gray-700 font-bold text-base text-gray-100 w-full mb-2">
         My Posts
       </div>
 
-      <div className="feed-container">
+      <div className="w-full grid grid-cols-3 gap-1">
         <AnimatePresence>
           {loading && (
-            <motion.div
-              key="loading"
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
-              exit={{ opacity: 0 }}
-            >
-              <PostSkeleton />
-              <PostSkeleton />
-              <PostSkeleton />
-            </motion.div>
+            Array.from({ length: 9 }).map((_, i) => (
+              <div key={i} className="aspect-square shimmer rounded-sm" />
+            ))
           )}
 
           {!loading && posts && posts.length > 0 &&
             posts.map((post, index) => (
               <motion.div
                 key={post._id}
-                initial={{ opacity: 0, scale: 0.95 }}
+                initial={{ opacity: 0, scale: 0.9 }}
                 animate={{ opacity: 1, scale: 1 }}
-                transition={{ delay: index * 0.1, duration: 0.4 }}
+                transition={{ delay: index * 0.05, duration: 0.3 }}
+                className="aspect-square overflow-hidden bg-gray-900 cursor-pointer hover:opacity-90 transition-opacity"
               >
-                <PostCard post={post} />
+                <img 
+                  src={post.image || `https://picsum.photos/seed/${post._id}/300/300`} 
+                  alt={post.caption}
+                  className="w-full h-full object-cover"
+                />
               </motion.div>
             ))
           }
 
           {!loading && (!posts || posts.length === 0) && (
             <motion.div 
-              className="feed-empty"
+              className="col-span-3 flex flex-col items-center justify-center px-6 py-20 text-gray-400 text-center"
               initial={{ opacity: 0, y: 10 }}
               animate={{ opacity: 1, y: 0 }}
             >
-              <div className="feed-empty-icon">📸</div>
-              <h2 className="feed-empty-title">No posts yet</h2>
-              <p className="feed-empty-desc">Share your first photo to get started.</p>
+              <div className="text-6xl mb-4 opacity-50">📸</div>
+              <h2 className="text-2xl font-semibold text-gray-200 mb-2">No posts yet</h2>
+              <p className="text-sm text-gray-500">Share your first photo to get started.</p>
             </motion.div>
           )}
         </AnimatePresence>

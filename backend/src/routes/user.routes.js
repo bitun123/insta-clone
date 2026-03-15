@@ -12,4 +12,6 @@ authRoute.post("/login",userControllers.loginControllers)
 
 authRoute.get("/get-me",identifyUser,userControllers.getControllers)
 
+authRoute.post("/logout",identifyUser,userControllers.logoutControllers)
+
 module.exports = authRoute;

@@ -1,7 +1,3 @@
-// Pages Layer — CreatePost
-// Form to create a new post wired to handleCreatePost from usePost
-// Uses framer-motion for smooth image preview entry
-
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { motion, AnimatePresence } from "framer-motion";
@@ -34,38 +30,16 @@ function CreatePost() {
       initial={{ opacity: 0, x: -20 }}
       animate={{ opacity: 1, x: 0 }}
       transition={{ duration: 0.4 }}
-      style={{ padding: "40px 24px", width: "100%", display: "flex", justifyContent: "center" }}
+      className="py-10 px-6 w-full flex justify-center"
     >
-      <div style={{ width: "100%", maxWidth: 470 }}>
-        <h2 style={{
-          fontSize: 16,
-          fontWeight: 700,
-          color: "#f5f5f5",
-          textAlign: "center",
-          borderBottom: "1px solid #262626",
-          paddingBottom: 14,
-          marginBottom: 24,
-        }}>
+      <div className="w-full max-w-[470px]">
+        <h2 className="text-base font-bold text-gray-100 text-center border-b border-gray-700 pb-3.5 mb-6">
           Create new post
         </h2>
 
         <form onSubmit={onSubmit}>
           {/* Image Upload */}
-          <label style={{
-            display: "flex",
-            flexDirection: "column",
-            alignItems: "center",
-            justifyContent: "center",
-            border: "2px dashed #404040",
-            borderRadius: 12,
-            padding: 32,
-            cursor: "pointer",
-            marginBottom: 20,
-            background: preview ? "transparent" : "#111",
-            minHeight: 280,
-            overflow: "hidden",
-            position: "relative",
-          }}>
+          <label className={`flex flex-col items-center justify-center border-2 border-dashed border-gray-600 rounded-3xl p-8 cursor-pointer mb-5 min-h-72 overflow-hidden relative transition-all ${preview ? "bg-transparent" : "bg-gray-950"}`}>
             <AnimatePresence mode="wait">
               {preview ? (
                 <motion.img
@@ -75,7 +49,7 @@ function CreatePost() {
                   exit={{ opacity: 0 }}
                   src={preview}
                   alt="preview"
-                  style={{ width: "100%", borderRadius: 8, objectFit: "cover" }}
+                  className="w-full rounded-2xl object-cover"
                 />
               ) : (
                 <motion.div 
@@ -83,13 +57,13 @@ function CreatePost() {
                   initial={{ opacity: 0 }}
                   animate={{ opacity: 1 }}
                   exit={{ opacity: 0 }}
-                  style={{ textAlign: "center", color: "#737373" }}
+                  className="text-center text-gray-600"
                 >
-                  <div style={{ fontSize: 40, marginBottom: 12 }}>🖼️</div>
-                  <p style={{ fontSize: 14, fontWeight: 600, color: "#d4d4d4" }}>
+                  <div className="text-5xl mb-3">🖼️</div>
+                  <p className="text-sm font-semibold text-gray-300">
                     Click to select a photo
                   </p>
-                  <p style={{ fontSize: 12, marginTop: 4 }}>JPG, PNG, GIF</p>
+                  <p className="text-xs mt-1">JPG, PNG, GIF</p>
                 </motion.div>
               )}
             </AnimatePresence>
@@ -97,7 +71,7 @@ function CreatePost() {
               type="file"
               accept="image/*"
               onChange={onImageChange}
-              style={{ display: "none" }}
+              className="hidden"
             />
           </label>
 
@@ -107,20 +81,7 @@ function CreatePost() {
             value={caption}
             onChange={(e) => setCaption(e.target.value)}
             rows={3}
-            style={{
-              width: "100%",
-              background: "#111",
-              border: "1px solid #262626",
-              borderRadius: 8,
-              color: "#f5f5f5",
-              fontSize: 14,
-              padding: "10px 14px",
-              resize: "none",
-              outline: "none",
-              marginBottom: 16,
-              fontFamily: "inherit",
-              transition: "border-color 0.2s ease"
-            }}
+            className="w-full bg-gray-950 border border-gray-700 rounded-2xl text-gray-100 text-sm p-3.5 resize-none outline-none mb-4 font-inherit focus:border-gray-600 transition-colors"
           />
 
           {/* Submit */}
@@ -129,18 +90,11 @@ function CreatePost() {
             whileTap={{ scale: 0.98 }}
             type="submit"
             disabled={!image || loading}
-            style={{
-              width: "100%",
-              background: image && !loading ? "#0095f6" : "#0095f620",
-              color: image && !loading ? "#fff" : "#0095f680",
-              border: "none",
-              borderRadius: 8,
-              fontSize: 14,
-              fontWeight: 700,
-              padding: "10px 0",
-              cursor: image && !loading ? "pointer" : "not-allowed",
-              transition: "background 0.2s ease, opacity 0.2s ease",
-            }}
+            className={`w-full px-0 py-2.5 border-none rounded-2xl text-sm font-bold transition-all ${
+              image && !loading
+                ? "bg-blue-500 text-white cursor-pointer hover:bg-blue-600"
+                : "bg-blue-900 bg-opacity-15 text-blue-500 text-opacity-60 cursor-not-allowed"
+            }`}
           >
             {loading ? "Sharing…" : "Share"}
           </motion.button>

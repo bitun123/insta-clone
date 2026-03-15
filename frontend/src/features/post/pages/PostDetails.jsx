@@ -32,21 +32,13 @@ function PostDetails() {
 
   return (
     <motion.div 
-      initial={{ opacity: 0, y: 10 }}
+      initial={{ opacity: 0, y: 2.5 }}
       animate={{ opacity: 1, y: 0 }}
       transition={{ duration: 0.4 }}
-      style={{ display: "flex", justifyContent: "center", width: "100%" }}
+      className="flex justify-center w-full"
     >
-      <div style={{ width: "100%", maxWidth: 470 }}>
-        <h2 style={{
-          fontSize: 16,
-          fontWeight: 700,
-          color: "#f5f5f5",
-          textAlign: "center",
-          borderBottom: "1px solid #262626",
-          padding: "14px 0",
-          marginBottom: 10
-        }}>
+      <div className="w-full max-w-[470px]">
+        <h2 className="text-base font-bold text-gray-100 text-center border-b border-gray-700 py-3.5 mb-2.5">
           Post
         </h2>
 
@@ -54,7 +46,7 @@ function PostDetails() {
 
         {!loading && post && (
           <motion.article 
-            className="post-card"
+            className="bg-black border-b border-gray-700 mb-0 pb-1"
             initial={{ scale: 0.98, opacity: 0 }}
             animate={{ scale: 1, opacity: 1 }}
             transition={{ duration: 0.3 }}
@@ -77,10 +69,10 @@ function PostDetails() {
         )}
 
         {!loading && !post && (
-          <div className="feed-empty">
-            <div className="feed-empty-icon">🔍</div>
-            <h2 className="feed-empty-title">Post not found</h2>
-            <p className="feed-empty-desc">This post may have been deleted.</p>
+          <div className="flex flex-col items-center justify-center px-6 py-20 text-gray-400 text-center">
+            <div className="text-6xl mb-4 opacity-50">🔍</div>
+            <h2 className="text-2xl font-semibold text-gray-200 mb-2">Post not found</h2>
+            <p className="text-sm text-gray-500">This post may have been deleted.</p>
           </div>
         )}
       </div>

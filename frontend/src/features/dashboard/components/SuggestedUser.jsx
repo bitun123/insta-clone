@@ -25,18 +25,18 @@ function SuggestedUser({ userId, username, subtitle, avatarSeed, isFollowing = f
   };
 
   return (
-    <div className="suggested-user">
-      <div className="suggested-user-left">
-        <div className="suggested-avatar-wrap">
+    <div className="flex items-center justify-between gap-2.5">
+      <div className="flex items-center gap-2.5 min-w-0">
+        <div className="w-9 h-9 rounded-full overflow-hidden flex-shrink-0 bg-gray-700">
           <img
             src={`https://api.dicebear.com/7.x/adventurer/svg?seed=${avatarSeed || username}`}
             alt={username}
-            className="suggested-avatar"
+            className="w-full h-full object-cover block"
           />
         </div>
-        <div className="suggested-user-info">
-          <span className="suggested-username">{username}</span>
-          <span className="suggested-subtitle">{subtitle}</span>
+        <div className="flex flex-col min-w-0">
+          <span className="text-sm font-semibold text-gray-100 overflow-hidden text-ellipsis whitespace-nowrap">{username}</span>
+          <span className="text-xs text-gray-600 overflow-hidden text-ellipsis whitespace-nowrap">{subtitle}</span>
         </div>
       </div>
       <FollowButton 

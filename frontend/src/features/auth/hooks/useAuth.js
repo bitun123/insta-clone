@@ -1,6 +1,13 @@
 import { useContext } from "react";
 import { AuthContext } from "../context/AuthProvider";
-import { registration, login, getMe, followUser, unfollowUser } from "../services/auth.api";
+import {
+  registration,
+  login,
+  getMe,
+  followUser,
+  unfollowUser,
+  logout,
+} from "../services/auth.api";
 import { useEffect } from "react";
 
 export const useAuth = () => {
@@ -9,12 +16,11 @@ export const useAuth = () => {
   const { User, setUser, loading, setLoading } = context;
 
   const handleLogin = async ({ email, password }) => {
-      setLoading(true);
+    setLoading(true);
     try {
       const response = await login({ email, password });
       setUser(response.user || response);
       return response;
-
     } catch (error) {
       console.error("Login API call failed:", error);
       setUser(null);
@@ -34,29 +40,23 @@ export const useAuth = () => {
       console.error("Registration failed:", error);
       setUser(null);
       throw error;
-    }
-    finally {      setLoading(false);
+    } finally {
+      setLoading(false);
     }
   };
 
-const handleGetMe = async () => {
-  try {
-    const response = await getMe();
-    setUser({ ...response.user, following: response.following || [] });
-    return response;
-  } catch (error) {
-    console.error("GetMe API call failed:", error);
-    setUser(null);
-  } finally {
-    setLoading(false);
-  }
-}
-
-
-
-useEffect(()=>{
-    handleGetMe();
-},[])
+  const handleGetMe = async () => {
+    try {
+      const response = await getMe();
+      setUser({ ...response.user, following: response.following || [] });
+      return response;
+    } catch (error) {
+      console.error("GetMe API call failed:", error);
+      setUser(null);
+    } finally {
+      setLoading(false);
+    }
+  };
 
   const handleFollowUser = async (userId) => {
     try {
@@ -76,6 +76,20 @@ useEffect(()=>{
     }
   };
 
+  const handleLogout = async () => {
+    try {
+      const response = await logout();
+      setUser(null);
+      return response;
+    } catch (error) {
+      console.error("Logout API call failed:", error);
+    }
+  };
+
+  useEffect(() => {
+    handleGetMe();
+  }, []);
+
   return {
     User,
     loading,
@@ -83,6 +97,7 @@ useEffect(()=>{
     handleRegister,
     handleGetMe,
     handleFollowUser,
-    handleUnfollowUser
+    handleUnfollowUser,
+    handleLogout,
   };
 };

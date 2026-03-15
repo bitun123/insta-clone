@@ -18,14 +18,14 @@ function Feed() {
 
   return (
     <motion.div 
-      className="feed-wrapper"
+      className="w-full max-w-[470px] flex flex-col"
       initial={{ opacity: 0 }}
       animate={{ opacity: 1 }}
       exit={{ opacity: 0 }}
       transition={{ duration: 0.3 }}
     >
       <StoriesContainer />
-      <div className="feed-container">
+      <div className="w-full max-w-[470px] flex flex-col gap-0">
         {loading && (
           <>
             <PostSkeleton />
@@ -49,13 +49,13 @@ function Feed() {
 
         {!loading && (!feed || feed.length === 0) && (
           <motion.div 
-            className="feed-empty"
+            className="flex flex-col items-center justify-center px-6 py-20 text-gray-400 text-center"
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
           >
-            <div className="feed-empty-icon">📷</div>
-            <h2 className="feed-empty-title">No posts yet</h2>
-            <p className="feed-empty-desc">Follow people to see their posts in your feed.</p>
+            <div className="text-6xl mb-4 opacity-50">📷</div>
+            <h2 className="text-2xl font-semibold text-gray-200 mb-2">No posts yet</h2>
+            <p className="text-sm text-gray-500">Follow people to see their posts in your feed.</p>
           </motion.div>
         )}
       </div>

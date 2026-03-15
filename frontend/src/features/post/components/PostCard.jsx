@@ -34,7 +34,7 @@ function PostCard({ post = {} }) {
 
   return (
     <motion.article 
-      className="post-card"
+      className="bg-black border-b border-gray-700 mb-0 pb-1"
       whileHover={{ scale: 1.005 }}
       transition={{ duration: 0.2 }}
     >

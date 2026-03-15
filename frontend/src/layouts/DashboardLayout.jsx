@@ -7,12 +7,12 @@ import { Outlet } from "react-router-dom";
 
 function DashboardLayout() {
   return (
-    <div className="dashboard-layout">
+    <div className="grid grid-cols-1 md:grid-cols-[72px_1fr] lg:grid-cols-[245px_1fr_335px] min-h-screen max-w-[1300px] mx-auto relative transition-all duration-300">
       {/* Left Sidebar (Global Navigation) */}
       <Sidebar />
 
       {/* Center Feed Component Area */}
-      <main className="dashboard-center">
+      <main className="border-l border-r border-gray-700 min-h-screen flex flex-col items-center pt-2 w-full sm:border-0">
         <Outlet />
       </main>
 

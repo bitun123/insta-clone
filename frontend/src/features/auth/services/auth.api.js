@@ -45,3 +45,8 @@ export async function unfollowUser(userId) {
   const response = await apiUsers.post(`/unfollow/${userId}`);
   return response.data;
 }
+
+export async function logout() {
+  const response = await apiAuth.post("/logout");
+  return response.data;
+}
