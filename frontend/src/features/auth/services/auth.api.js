@@ -10,13 +10,18 @@ export async function registration(userName, email, password) {
         userName, email, password
     })
 
-    return response
+    return response.data
 }
 
-export async function login(userName, password) {
+export async function login({ email, password }) {
     const response = await api.post('/login', {
-        userName, password
+        email, password
     })
+    return response.data
+}
 
-    return response.user
+
+export async function getMe(){
+    const response = await api.get("/get-me")
+    return response.data
 }

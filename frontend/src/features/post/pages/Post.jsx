@@ -5,6 +5,9 @@ import Feed from "../components/Feed";
 
 function Post() {
 
+
+
+    
     return (
         <div className="min-h-screen bg-black">
             <Navbar />

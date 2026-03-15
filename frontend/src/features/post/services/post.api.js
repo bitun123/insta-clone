@@ -14,3 +14,5 @@ export async function likePost(postId) {
     const response = await api.post(`/likes/${postId}`);
     return response.data;
 }
+
+// http://localhost:3000/api/post/feed

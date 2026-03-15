@@ -10,12 +10,16 @@ function Registration() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
 
+  if (loading) {
+    return (
+      <div className="w-full h-screen bg-black flex items-center justify-center">
+        <h1 className="text-white text-2xl">Loading...</h1>
+      </div>
+    );
+  }
+
   const handleSubmit = async (e) => {
     e.preventDefault();
-    if (loading) {
-      return <h1>Loading.......</h1>;
-    }
-
     const res = await handleRegister(userName, email, password);
     console.log(res);
     navigate("/login");
@@ -26,49 +30,71 @@ function Registration() {
   };
 
   return (
-    <div className="w-[100%] h-[100vh] bg-gray-900 flex flex-col gap-3 items-center justify-center">
-      <div className="text-white">
-        <h1 className="text-2xl font-semibold">Registration</h1>
-      </div>
-      <form onSubmit={(e) => handleSubmit(e)} className="flex flex-col gap-4">
-        <input
+    <div className="w-full min-h-screen bg-black flex flex-col items-center justify-center px-4 py-8">
+      {/* Main Container */}
+      <div className="w-full max-w-sm">
+        {/* Sign Up Card */}
+        <div className="border border-gray-700 bg-black rounded-lg px-8 py-12 mb-4 flex flex-col items-center">
+          {/* Instagram Logo */}
+          <h1 className="text-4xl font-light text-white mb-6 tracking-widest" style={{ fontFamily: 'Georgia, serif' }}>
+            Instagram
+          </h1>
 
-          value={userName}
-          onChange={(e) => {
-            setuserName(e.target.value);
-          }}
-          type="text"
-          name="userName"
-          placeholder="enter your name"
-          className="bg-gray-300 border-none outline-none rounded-4xl px-3 py-2 text-black font-semibold text-xl"
-        />
-        <input
-          value={email}
-          onChange={(e) => setEmail(e.target.value)}
-          type="text"
-          name="email"
-          placeholder="enter your email"
-          className="bg-gray-300 border-none outline-none rounded-4xl px-3 py-2 text-black font-semibold text-xl"
-        />
-        <input
-          value={password}
-          onChange={(e) => setPassword(e.target.value)}
-          type="text"
-          name="password"
-          placeholder="enter your password"
-          className="bg-gray-300 border-none outline-none rounded-4xl px-3 py-2 text-black font-semibold text-xl"
-        />
-        <button className="w-full bg-red-400 px-2 py-2 rounded-4xl active:scale-95 cursor-pointer">
-          Registration
-        </button>
-      </form>
-      <p className="text-xl text-white ">
-        already have a account?{" "}
-        <Link to={"/login"} className="text-red-500 cursor-pointer">
-          {" "}
-          Login
-        </Link>
-      </p>
+          {/* Sign Up Subtitle */}
+          <p className="text-gray-400 text-center text-sm mb-8 px-2">
+            Sign up to see photos and videos from your friends.
+          </p>
+
+          {/* Sign Up Form */}
+          <form className="w-full flex flex-col gap-3" onSubmit={handleSubmit}>
+            <input
+              type="text"
+              name="email"
+              placeholder="Email"
+              value={email}
+              onChange={(e) => setEmail(e.target.value)}
+              className="w-full bg-gray-900 border border-gray-700 rounded-md px-4 py-3 text-sm text-white placeholder-gray-500 focus:outline-none focus:border-gray-600 focus:bg-gray-800 transition"
+            />
+            <input
+              type="text"
+              name="userName"
+              placeholder="Full Name"
+              value={userName}
+              onChange={(e) => setuserName(e.target.value)}
+              className="w-full bg-gray-900 border border-gray-700 rounded-md px-4 py-3 text-sm text-white placeholder-gray-500 focus:outline-none focus:border-gray-600 focus:bg-gray-800 transition"
+            />
+            <input
+              type="password"
+              name="password"
+              placeholder="Password"
+              value={password}
+              onChange={(e) => setPassword(e.target.value)}
+              className="w-full bg-gray-900 border border-gray-700 rounded-md px-4 py-3 text-sm text-white placeholder-gray-500 focus:outline-none focus:border-gray-600 focus:bg-gray-800 transition"
+            />
+            <button
+              type="submit"
+              className="w-full bg-blue-500 hover:bg-blue-600 text-white font-semibold py-2 rounded-md mt-2 active:scale-98 cursor-pointer transition duration-200"
+            >
+              Sign up
+            </button>
+          </form>
+
+          {/* Terms */}
+          <p className="text-gray-500 text-xs text-center mt-6 px-2">
+            By signing up, you agree to our Terms, Data Policy and Cookies Policy.
+          </p>
+        </div>
+
+        {/* Login Card */}
+        <div className="border border-gray-700 bg-black rounded-lg px-8 py-6 text-center">
+          <p className="text-gray-300 text-sm">
+            Have an account?{" "}
+            <Link to="/login" className="text-blue-400 hover:text-blue-300 font-semibold transition">
+              Log in
+            </Link>
+          </p>
+        </div>
+      </div>
     </div>
   );
 }
