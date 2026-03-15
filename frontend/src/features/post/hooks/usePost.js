@@ -5,6 +5,7 @@ import {
   likePost,
   getPostDetails,
   getMyPosts,
+  unlikePost
 } from "../services/post.api";
 import { PostContext } from "../context/PostContextProvider";
 export const usePost = () => {
@@ -76,6 +77,16 @@ export const usePost = () => {
       setLoading(false);
     }
   };
+
+  const handleUnlikePost = async (postId) => {
+    try {
+      const response = await unlikePost(postId);
+      return response;
+    } catch (error) {
+      console.error("Unlike Post API call failed:", error);
+    }
+  };
+
   return {
     loading,
     posts,
@@ -86,5 +97,6 @@ export const usePost = () => {
     handleLikePost,
     handleGetPostDetails,
     handleGetMyPosts,
+    handleUnlikePost
   };
 };

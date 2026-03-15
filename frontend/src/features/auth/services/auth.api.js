@@ -1,27 +1,47 @@
 import axios from "axios";
 
-const api = axios.create({
+const apiAuth = axios.create({
   baseURL: "http://localhost:3000/api/auth",
   withCredentials: true,
 });
 
-export async function registration(userName, email, password) {
-    const response = await api.post('/registration', {
-        userName, email, password
-    })
+const apiUsers = axios.create({
+  baseURL: "http://localhost:3000/api/users",
+  withCredentials: true,
+});
 
-    return response.data
+export async function registration(username, email, password) {
+  const response = await apiAuth.post("/registration", {
+    userName: username,
+    email,
+    password,
+  });
+
+  return response.data;
 }
 
 export async function login({ email, password }) {
-    const response = await api.post('/login', {
-        email, password
-    })
-    return response.data
+  // If the email field doesn't contain an @, it's a username.
+  const payload = email.includes("@") 
+    ? { email, password } 
+    : { userName: email, password };
+    
+  const response = await apiAuth.post("/login", payload);
+
+  return response.data;
 }
 
+export async function getMe() {
+  const response = await apiAuth.get("/get-me");
+  return response.data;
+}
 
-export async function getMe(){
-    const response = await api.get("/get-me")
-    return response.data
+export async function followUser(userId) {
+  const response = await apiUsers.post(`/follow/${userId}`);
+  return response.data;
+}
+
+export async function unfollowUser(userId) {
+  const response = await apiUsers.post(`/unfollow/${userId}`);
+  return response.data;
 }

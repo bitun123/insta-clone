@@ -20,13 +20,17 @@ function Registration() {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    const res = await handleRegister(userName, email, password);
-    console.log(res);
-    navigate("/login");
+    try {
+      const res = await handleRegister(userName, email, password);
+      console.log(res);
+      navigate("/login");
 
-    setuserName("");
-    setEmail("");
-    setPassword("");
+      setuserName("");
+      setEmail("");
+      setPassword("");
+    } catch (err) {
+      console.error("Registration UI Error:", err);
+    }
   };
 
   return (

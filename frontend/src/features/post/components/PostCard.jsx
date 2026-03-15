@@ -1,29 +1,60 @@
+// Post Feature — PostCard
+// Renders a single post using real API data.
+// Passes postId down to PostActions for like handling.
 
-import { Heart, MessageCircle, Send, Bookmark, MoreHorizontal, Smile } from "lucide-react";
+import { motion } from "framer-motion";
+import PostHeader from "../../dashboard/components/PostHeader";
+import PostImage from "../../dashboard/components/PostImage";
+import PostActions from "../../dashboard/components/PostActions";
+import { useAuth } from "../../auth/hooks/useAuth";
 
-import { PostContext } from "../context/PostContextProvider";
+function PostCard({ post = {} }) {
+  const { User } = useAuth();
 
-function PostCard() {
+  const {
+    _id,
+    user,
+    image,
+    caption,
+    likes = [],
+    createdAt,
+  } = post;
 
+  const username  = user?.userName  || "unknown";
+  const avatarUrl = user?.avatar    || undefined;
+  const location  = post.location   || "";
+  const likesCount = likes.length;
+  
+  // The backend populates likes as an array of objects. We check if the current user ID is in it.
+  const isLikedByMe = likes.some(like => like.user === User?._id);
 
-    return (
-        <div className="w-[25rem] h-[35rem] bg-amber-100 rounded">
-            <div>
-                <div><img src="" alt="" /></div>
-                <div><h1>satyajit</h1></div>
-            </div>
-            <div>
-                <div>
-                    <img src="" alt="" />
-                </div>
-                <div>
-                    <Heart />
-                    <MessageCircle />
-                    <Send /> 
-                </div>
-            </div>
-        </div>
-    );
+  const timestamp = createdAt
+    ? new Date(createdAt).toLocaleDateString("en-US", { month: "short", day: "numeric" }).toUpperCase()
+    : "";
+
+  return (
+    <motion.article 
+      className="post-card"
+      whileHover={{ scale: 1.005 }}
+      transition={{ duration: 0.2 }}
+    >
+      <PostHeader
+        username={username}
+        location={location}
+        avatarSeed={username}
+        avatarUrl={avatarUrl}
+      />
+      <PostImage src={image} alt={caption} />
+      <PostActions
+        postId={_id}
+        likes={likesCount}
+        isLikedByMe={isLikedByMe}
+        username={username}
+        caption={caption}
+        timestamp={timestamp}
+      />
+    </motion.article>
+  );
 }
 
 export default PostCard;

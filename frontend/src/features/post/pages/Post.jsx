@@ -1,21 +1,25 @@
+// Pages Layer — Post (Dashboard layout page)
+// 3-column layout: Sidebar | Feed | RightSidebar
 
-import Navbar from "../components/Navbar";
+import Sidebar from "../../dashboard/components/Sidebar";
 import Feed from "../components/Feed";
-
+import RightSidebar from "../../dashboard/components/RightSidebar";
 
 function Post() {
+  return (
+    <div className="dashboard-layout">
+      {/* Left Sidebar */}
+      <Sidebar />
 
+      {/* Center Feed */}
+      <main className="dashboard-center">
+        <Feed />
+      </main>
 
-
-    
-    return (
-        <div className="min-h-screen bg-black">
-            <Navbar />
-            <main className="pt-4 pb-16 flex justify-center">
-                <Feed />
-            </main>
-        </div>
-    );
+      {/* Right Sidebar */}
+      <RightSidebar />
+    </div>
+  );
 }
 
 export default Post;

@@ -32,6 +32,11 @@ export async function getPostDetails(postId) {
 
 
 export async function getMyPosts() {
-  const response = await api.get("/feed");
+  const response = await api.get("/feed"); // Assuming /feed gets user posts dynamically based on auth in original setup
+  return response.data;
+}
+
+export async function unlikePost(postId) {
+  const response = await api.delete(`/likes/${postId}`);
   return response.data;
 }

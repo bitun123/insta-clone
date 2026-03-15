@@ -26,6 +26,12 @@ postRouter.post(
   postControllers.likesControllers,
 );
 
+postRouter.delete(
+  "/likes/:postId",
+  identifyUser,
+  postControllers.unlikeController
+);
+
 postRouter.get("/feed", identifyUser, postControllers.getFeedController);
 
 module.exports = postRouter;

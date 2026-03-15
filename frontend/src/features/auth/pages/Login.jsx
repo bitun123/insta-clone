@@ -19,9 +19,13 @@ function Login() {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
- const response =    await handleLogin({email, password});
- console.log("Login response:", response);
-    navigate("/");
+    try {
+      const response = await handleLogin({email, password});
+      console.log("Login response:", response);
+      navigate("/");
+    } catch (err) {
+      console.error("Login UI Error:", err);
+    }
   };
 
   return (

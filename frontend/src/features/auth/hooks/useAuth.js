@@ -1,6 +1,6 @@
 import { useContext } from "react";
 import { AuthContext } from "../context/AuthProvider";
-import { registration, login,getMe } from "../services/auth.api";
+import { registration, login, getMe, followUser, unfollowUser } from "../services/auth.api";
 import { useEffect } from "react";
 
 export const useAuth = () => {
@@ -18,6 +18,7 @@ export const useAuth = () => {
     } catch (error) {
       console.error("Login API call failed:", error);
       setUser(null);
+      throw error;
     } finally {
       setLoading(false);
     }
@@ -32,6 +33,7 @@ export const useAuth = () => {
     } catch (error) {
       console.error("Registration failed:", error);
       setUser(null);
+      throw error;
     }
     finally {      setLoading(false);
     }
@@ -40,7 +42,7 @@ export const useAuth = () => {
 const handleGetMe = async () => {
   try {
     const response = await getMe();
-    setUser(response.user);
+    setUser({ ...response.user, following: response.following || [] });
     return response;
   } catch (error) {
     console.error("GetMe API call failed:", error);
@@ -56,11 +58,31 @@ useEffect(()=>{
     handleGetMe();
 },[])
 
+  const handleFollowUser = async (userId) => {
+    try {
+      const response = await followUser(userId);
+      return response;
+    } catch (error) {
+      console.error("Follow User API call failed:", error);
+    }
+  };
+
+  const handleUnfollowUser = async (userId) => {
+    try {
+      const response = await unfollowUser(userId);
+      return response;
+    } catch (error) {
+      console.error("Unfollow User API call failed:", error);
+    }
+  };
+
   return {
     User,
     loading,
     handleLogin,
     handleRegister,
-    handleGetMe
+    handleGetMe,
+    handleFollowUser,
+    handleUnfollowUser
   };
 };

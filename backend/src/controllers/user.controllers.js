@@ -1,4 +1,5 @@
 const userModels = require("../models/user.models");
+const followModels = require("../models/follow.models");
 const jwt = require("jsonwebtoken");
 const bcrypt = require("bcrypt");
 async function registrationControllers(req, res) {
@@ -26,7 +27,11 @@ async function registrationControllers(req, res) {
     expiresIn: "1d",
   });
 
-  res.cookie("jwt_token", token);
+  res.cookie("token", token, {
+    httpOnly: true,
+    secure: false, // Set true in production
+    sameSite: "lax",
+  });
 
   res.status(201).json({
     message: "registration successfully",
@@ -62,7 +67,11 @@ async function loginControllers(req, res) {
     expiresIn: "1d",
   });
 
-  res.cookie("token", token);
+  res.cookie("token", token, {
+    httpOnly: true,
+    secure: false, // Set true in production
+    sameSite: "lax",
+  });
 
   res.status(200).json({
     message: "login successfully",
@@ -77,15 +86,20 @@ async function loginControllers(req, res) {
 async function getControllers(req,res){
 try{
   const userId = req.user.id;
-  const user = await userModels.findById(userId);
+  const user = await userModels.findById(userId).lean();
   if(!user){
     return res.status(404).json({
       message: "user not found"
     })
   }
+  
+  const followingRecords = await followModels.find({ follower: userId });
+  const following = followingRecords.map(record => record.followee);
+
   res.status(200).json({
     message: "user found",
-    user
+    user,
+    following
   })
 }
 catch(error){
