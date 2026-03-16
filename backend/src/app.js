@@ -20,6 +20,7 @@ app.use(
     methods: ["GET", "POST", "PUT", "DELETE"],
   }),
 );
+app.use(express.static("./public"));
 
 //auth api prefix
 app.use("/api/auth", authRoute);
