@@ -1,7 +1,6 @@
 const express = require("express");
 const postRouter = express.Router();
-const multer = require("multer");
-const upload = multer({ storage: multer.memoryStorage() });
+const upload = require("../middleware/upload.middleware");
 const postControllers = require("../controllers/post.controllers");
 const identifyUser = require("../middleware/user.middleware");
 
@@ -33,5 +32,7 @@ postRouter.delete(
 );
 
 postRouter.get("/feed", identifyUser, postControllers.getFeedController);
+
+postRouter.delete("/:postId", identifyUser, postControllers.deletePostControllers);
 
 module.exports = postRouter;

@@ -40,3 +40,14 @@ export async function unlikePost(postId) {
   const response = await api.delete(`/likes/${postId}`);
   return response.data;
 }
+
+
+export async function deletePost(postId) {
+  try {
+    console.log("API: Deleting post with ID:", postId);
+    const response = await api.delete(`/${postId}`);
+    return response.data;
+  } catch (error) {
+    throw new Error("Failed to delete the post. Please try again.", error.message);
+  }
+}

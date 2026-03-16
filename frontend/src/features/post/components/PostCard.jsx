@@ -43,6 +43,7 @@ function PostCard({ post = {} }) {
         location={location}
         avatarSeed={username}
         avatarUrl={avatarUrl}
+        postId={_id}
       />
       <PostImage src={image} alt={caption} />
       <PostActions

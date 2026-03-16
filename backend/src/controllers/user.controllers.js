@@ -46,21 +46,23 @@ async function registrationControllers(req, res) {
 
 async function loginControllers(req, res) {
   const { userName, email, password } = req.body;
+
   const user = await userModels
-    .findOne({
-      $or: [{ userName }, { email }],
-    })
-    .select("+password");
+    .findOne({ $or: [{ userName }, { email }] })
+    .select("userName email password")
+    .lean();
+
   if (!user) {
     return res.status(401).json({
       message: "user not exists",
     });
   }
 
-  const isPasswaorMatch = await bcrypt.compare(password, user.password);
-  if (!isPasswaorMatch) {
+  const isPasswordMatch = await bcrypt.compare(password, user.password);
+
+  if (!isPasswordMatch) {
     return res.status(401).json({
-      message: "password not Match",
+      message: "password not match",
     });
   }
 
@@ -70,17 +72,16 @@ async function loginControllers(req, res) {
 
   res.cookie("token", token, {
     httpOnly: true,
-    secure: false, // Set true in production
+    secure: false,
     sameSite: "lax",
   });
 
   res.status(200).json({
     message: "login successfully",
     user: {
-      user: user.userName,
+      userName: user.userName,
       email: user.email,
     },
-    token,
   });
 }
 

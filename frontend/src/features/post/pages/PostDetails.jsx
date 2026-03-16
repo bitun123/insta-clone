@@ -56,6 +56,7 @@ function PostDetails() {
               location={location}
               avatarSeed={username}
               avatarUrl={avatarUrl}
+              postId={post._id}
             />
             <PostImage src={post.image} alt={caption} />
             <PostActions

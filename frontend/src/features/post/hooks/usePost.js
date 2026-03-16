@@ -5,7 +5,8 @@ import {
   likePost,
   getPostDetails,
   getMyPosts,
-  unlikePost
+  unlikePost,
+  deletePost
 } from "../services/post.api";
 import { PostContext } from "../context/PostContextProvider";
 export const usePost = () => {
@@ -83,7 +84,17 @@ export const usePost = () => {
       const response = await unlikePost(postId);
       return response;
     } catch (error) {
-      console.error("Unlike Post API call failed:", error);
+      throw new Error("Failed to unlike the post. Please try again.", error.message);
+    }
+  };
+
+  const handleDeletePost = async (postId) => {
+    try {
+      const response = await deletePost(postId);
+      setPosts(posts.filter(post => post._id !== postId));
+      return response;
+    } catch (error) {
+      throw new Error("Failed to delete the post. Please try again.", error.message);
     }
   };
 
@@ -97,6 +108,7 @@ export const usePost = () => {
     handleLikePost,
     handleGetPostDetails,
     handleGetMyPosts,
-    handleUnlikePost
+    handleUnlikePost,
+    handleDeletePost
   };
 };
