@@ -89,14 +89,13 @@ export const usePost = () => {
   };
 
   const handleDeletePost = async (postId) => {
-    try {
-      const response = await deletePost(postId);
-      setPosts(posts.filter(post => post._id !== postId));
-      return response;
-    } catch (error) {
-      throw new Error("Failed to delete the post. Please try again.", error.message);
-    }
-  };
+  try {
+    const response = await deletePost(postId);
+    return response;
+  } catch (error) {
+    throw new Error("Failed to delete the post. Please try again.", error.message);
+  }
+};
 
   return {
     loading,

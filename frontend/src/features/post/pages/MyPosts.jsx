@@ -1,22 +1,30 @@
-// Pages Layer — MyPosts
-// Fetches and displays the logged-in user's posts via usePost.
-// Styled with framer-motion entry animations
+
 
 import { useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { usePost } from "../hooks/usePost";
-import PostCard from "../components/PostCard";
-import PostSkeleton from "../components/PostSkeleton";
+import { Trash2 } from "lucide-react";
 
 function MyPosts() {
-  const { posts, loading, handleGetMyPosts } = usePost();
+  const { posts, loading, handleGetMyPosts ,handleDeletePost} = usePost();
 
   useEffect(() => {
     handleGetMyPosts();
   }, []);
 
+
+  const handleDelete = async (postId) => {
+    try {
+      await handleDeletePost(postId);
+      handleGetMyPosts()
+    } catch (error) {
+      alert("Failed to delete the post. Please try again.", error.message);
+    }
+  }
+
+
   return (
-    <motion.div 
+    <motion.div
       initial={{ opacity: 0 }}
       animate={{ opacity: 1 }}
       exit={{ opacity: 0 }}
@@ -43,19 +51,22 @@ function MyPosts() {
                 initial={{ opacity: 0, scale: 0.9 }}
                 animate={{ opacity: 1, scale: 1 }}
                 transition={{ delay: index * 0.05, duration: 0.3 }}
-                className="aspect-square overflow-hidden bg-gray-900 cursor-pointer hover:opacity-90 transition-opacity"
+                className="aspect-square overflow-hidden bg-gray-900 cursor-pointer hover:opacity-90 transition-opacity relative "
               >
-                <img 
-                  src={post.image || `https://picsum.photos/seed/${post._id}/300/300`} 
+                <img
+                  src={post.image || `https://picsum.photos/seed/${post._id}/300/300`}
                   alt={post.caption}
                   className="w-full h-full object-cover"
                 />
+                <button className="bg-none border-none text-red-900 cursor-pointer p-1.5 rounded-lg flex items-center justify-center transition-all duration-150 hover:opacity-70 active:scale-85 leading-none absolute top-0 right-0" type="button" onClick={() => handleDelete(post._id)}>
+                  <Trash2 size={20} />
+                </button>
               </motion.div>
             ))
           }
 
           {!loading && (!posts || posts.length === 0) && (
-            <motion.div 
+            <motion.div
               className="col-span-3 flex flex-col items-center justify-center px-6 py-20 text-gray-400 text-center"
               initial={{ opacity: 0, y: 10 }}
               animate={{ opacity: 1, y: 0 }}

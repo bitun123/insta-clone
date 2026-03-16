@@ -1,33 +1,6 @@
-// Dashboard — PostHeader Component
 
-import Avatar from "../../../ui/Avatar";
-import {  Trash2 } from "lucide-react";
-import { usePost } from "../../post/hooks/usePost";
 
-function PostHeader({ username, location, avatarSeed, postId, onDeleteSuccess }) {
-const { handleDeletePost } = usePost();
-const handleDelete = async () => {
-  if (!postId) {
-    alert("Post ID is missing");
-    console.error("PostHeader - postId is missing/undefined");
-    return;
-  }
-
-  if (!window.confirm("Are you sure you want to delete this post?")) {
-    return;
-  }
-
-  try {
-    await handleDeletePost(postId);
-    alert("Post deleted successfully!");
-    if (onDeleteSuccess) {
-      onDeleteSuccess();
-    }
-  } catch(error) {
-    alert("Failed to delete the post. Please try again.",error.message);
-
-  }
-}
+function PostHeader({ username, location, avatarSeed,}) {
 
   return (
     <div className="flex items-center justify-between px-4 py-3">
@@ -44,11 +17,6 @@ const handleDelete = async () => {
           {location && <span className="text-xs text-gray-400">{location}</span>}
         </div>
       </div>
-      <button className="bg-none border-none text-red-800 cursor-pointer p-1.5 rounded-lg flex items-center justify-center transition-all duration-150 hover:opacity-70 active:scale-85 leading-none" type="button" 
-      onClick={handleDelete}
-      >
-   <Trash2  size={20}/>
-      </button>
     </div>
   );
 }

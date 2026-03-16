@@ -32,7 +32,7 @@ export async function getPostDetails(postId) {
 
 
 export async function getMyPosts() {
-  const response = await api.get("/feed"); // Assuming /feed gets user posts dynamically based on auth in original setup
+  const response = await api.get("/");
   return response.data;
 }
 
@@ -43,8 +43,8 @@ export async function unlikePost(postId) {
 
 
 export async function deletePost(postId) {
+  console.log("Attempting to delete post with ID:", postId);
   try {
-    console.log("API: Deleting post with ID:", postId);
     const response = await api.delete(`/${postId}`);
     return response.data;
   } catch (error) {
