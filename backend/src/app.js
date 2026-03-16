@@ -16,7 +16,7 @@ app.use(cookie());
 app.use(
   cors({
     credentials: true,
-    origin: "http://localhost:5173",
+    origin:[ "http://localhost:5173", "https://insta-clone-iv64.onrender.com" ],
     methods: ["GET", "POST", "PUT", "DELETE"],
   }),
 );
@@ -29,7 +29,6 @@ app.use("/api/auth", authRoute);
 app.use("/api/post", postRoute);
 
 //follow api prefix
-
-app.use("/api/users", followRoute);
+app.use("/api/follow", followRoute);
 
 module.exports = app;
