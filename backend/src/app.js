@@ -1,6 +1,7 @@
 const express = require("express");
 const cookie = require("cookie-parser");
 const cors = require("cors");
+const path = require("path");
 
 /**
  * require all routes
@@ -31,10 +32,12 @@ app.use("/api/post", postRoute);
 //follow api prefix
 app.use("/api/follow", followRoute);
 
-
-
-app.get("*", (_req, res) => {
-  res.sendFile(path.join(__dirname, "build", "index.html"));
+// 404 handler for undefined routes
+app.use((_req, res) => {
+  res.status(404).json({
+    message: "Route not found",
+    error: "The requested endpoint does not exist"
+  });
 });
 
 module.exports = app;
