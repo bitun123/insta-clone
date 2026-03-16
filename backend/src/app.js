@@ -32,11 +32,20 @@ app.use("/api/post", postRoute);
 //follow api prefix
 app.use("/api/follow", followRoute);
 
-// 404 handler for undefined routes
-app.use((_req, res) => {
-  res.status(404).json({
-    message: "Route not found",
-    error: "The requested endpoint does not exist"
+// Serve frontend static files
+app.use(express.static(path.join(__dirname, "../frontend/dist")));
+
+// For React Router - serve index.html for all non-API routes
+app.get("/*", (_req, res) => {
+  const indexPath = path.join(__dirname, "../frontend/dist/index.html");
+  res.sendFile(indexPath, (err) => {
+    if (err) {
+      console.error("Error sending index.html:", err);
+      res.status(404).json({
+        message: "Frontend not found",
+        error: "Make sure to build the frontend first: npm run build in the frontend directory"
+      });
+    }
   });
 });
 
