@@ -52,7 +52,7 @@ function Sidebar() {
       </div>
 
       {/* Nav Items */}
-      <nav className="flex flex-row w-full text-2xl items-center md:flex-col md:gap-0.5 md:flex-1 md:items-center">
+      <nav className="flex flex-row justify-around  w-full text-2xl items-center md:flex-col md:gap-0.5 md:flex-1 md:items-center lg:justify-start lg:gap-1.5">
         {NAV_ITEMS.map((item) => (
           <SidebarItem
             key={item.label}

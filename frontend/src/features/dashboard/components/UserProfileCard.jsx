@@ -5,9 +5,6 @@ import { useAuth } from "../../auth/hooks/useAuth";
 
 function UserProfileCard() {
   const { User } = useAuth();
-  console.log("Current User in UserProfileCard:", User);
-
-
   return (
     <div className="flex items-center gap-3.5 mb-5">
       <div className="p-0.5 rounded-full bg-gradient-to-r from-orange-400 via-red-500 to-pink-500">
