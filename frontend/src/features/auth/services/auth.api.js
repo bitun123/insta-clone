@@ -1,12 +1,12 @@
 import axios from "axios";
 
 const apiAuth = axios.create({
-  baseURL: "https://insta-clone-iv64.onrender.com/api/auth",
+  baseURL: "http://localhost:3000/api/auth",
   withCredentials: true,
 });
 
 const apiUsers = axios.create({
-  baseURL: "https://insta-clone-iv64.onrender.com/api/users",
+  baseURL: "http://localhost:3000/api/users",
   withCredentials: true,
 });
 

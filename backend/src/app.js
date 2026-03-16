@@ -31,4 +31,10 @@ app.use("/api/post", postRoute);
 //follow api prefix
 app.use("/api/follow", followRoute);
 
+
+
+app.get("*", (req, res) => {
+  res.sendFile(path.join(__dirname, "build", "index.html"));
+});
+
 module.exports = app;
