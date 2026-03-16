@@ -7,13 +7,14 @@ import {
   followUser,
   unfollowUser,
   logout,
+  getAllUsers,
 } from "../services/auth.api";
 import { useEffect } from "react";
 
 export const useAuth = () => {
   const context = useContext(AuthContext);
 
-  const { User, setUser, loading, setLoading } = context;
+  const { User, setUser, loading, setLoading, allUsers, setAllUsers } = context;
 
   const handleLogin = async ({ email, password }) => {
     setLoading(true);
@@ -86,18 +87,31 @@ export const useAuth = () => {
     }
   };
 
+  const handleGetAllUsers = async () => {
+    try {
+      const response = await getAllUsers();
+      setAllUsers(response.users);
+      return response;
+    } catch (error) {
+      console.error("Get All Users API call failed:", error);
+    }
+  };
+
   useEffect(() => {
     handleGetMe();
+    handleGetAllUsers();
   }, []);
 
   return {
     User,
     loading,
+    allUsers,
     handleLogin,
     handleRegister,
     handleGetMe,
     handleFollowUser,
     handleUnfollowUser,
     handleLogout,
+    handleGetAllUsers,
   };
 };

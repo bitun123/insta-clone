@@ -14,4 +14,7 @@ authRoute.get("/get-me",identifyUser,userControllers.getControllers)
 
 authRoute.post("/logout",identifyUser,userControllers.logoutControllers)
 
+
+
+authRoute.get("/getAllUsers",identifyUser,userControllers.getAllUsersControllers)
 module.exports = authRoute;

@@ -4,13 +4,7 @@ import UserProfileCard from "./UserProfileCard";
 import SuggestedUser from "./SuggestedUser";
 import { useAuth } from "../../auth/hooks/useAuth";
 
-const SUGGESTED = [
-  { userId: "650a1b2c3d4e5f6001122334", username: "alex_dev",    subtitle: "Followed by priya.ui",   seed: "alex"    },
-  { userId: "650a1b2c3d4e5f6001122335", username: "priya.ui",   subtitle: "New to Instagram",         seed: "priya"   },
-  { userId: "650a1b2c3d4e5f6001122336", username: "carlos_99",  subtitle: "Followed by marco_live",   seed: "carlos"  },
-  { userId: "650a1b2c3d4e5f6001122337", username: "yuki.snap",  subtitle: "New to Instagram",         seed: "yuki"    },
-  { userId: "650a1b2c3d4e5f6001122338", username: "sofia_art",  subtitle: "Followed by raj_toons",    seed: "sofia"   },
-];
+
 
 const FOOTER_LINKS = [
   "About", "Help", "Press", "API", "Jobs",
@@ -18,7 +12,7 @@ const FOOTER_LINKS = [
 ];
 
 function RightSidebar() {
-  const { User } = useAuth();
+  const { User,allUsers } = useAuth();
   const followingList = User?.following || [];
 
   return (
@@ -34,15 +28,15 @@ function RightSidebar() {
 
       {/* Suggested users list */}
       <div className="flex flex-col gap-3.5 mb-6">
-        {SUGGESTED.map((user) => {
-          const isFollowing = followingList.includes(user.userId);
+        {allUsers.map((user) => {
+          const isFollowing = followingList.includes(user._id);
           return (
             <SuggestedUser
-              key={user.username}
-              userId={user.userId}
-              username={user.username}
+              key={user._id}
+              userId={user._id}
+              username={user.userName}
               subtitle={user.subtitle}
-              avatarSeed={user.seed}
+              avatarSeed={user.profileImage}
               isFollowing={isFollowing}
             />
           );
