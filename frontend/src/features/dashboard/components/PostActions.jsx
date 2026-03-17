@@ -69,13 +69,13 @@ function PostActions({ postId, likes = 0, username, caption, timestamp = "", isL
       {timestamp && <div className="px-4 pb-2 text-xs text-gray-600 uppercase tracking-wider">{timestamp}</div>}
 
       {/* Add Comment */}
-      <div className="flex items-center gap-2.5 px-4 pb-3 border-t border-gray-800">
+      <div className="flex items-center gap-2.5 px-4 pb-3 border-t pt-2 border-gray-800">
         <Smile size={18} className="text-gray-600 flex-shrink-0" />
         <input
           type="text"
           placeholder="Add a comment…"
           className="flex-1 bg-none border-none outline-none text-sm text-gray-200 placeholder:text-gray-600"
-          readOnly
+        
         />
         <button className="bg-none border-none text-blue-500 text-sm font-semibold cursor-pointer p-0" type="button">Post</button>
       </div>
