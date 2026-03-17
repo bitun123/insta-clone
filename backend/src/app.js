@@ -9,6 +9,7 @@ const path = require("path");
 const authRoute = require("./routes/user.routes");
 const postRoute = require("./routes/post.routes");
 const followRoute = require("./routes/follow.routes");
+const commentRoute = require("./routes/comment.routes");
 
 const app = express();
 //use middleware
@@ -31,6 +32,9 @@ app.use("/api/post", postRoute);
 
 //follow api prefix
 app.use("/api/follow", followRoute);
+
+//comment api prefix
+app.use("/api/comment", commentRoute);
 
 // Serve frontend static files
 app.use(express.static(path.join(__dirname, "../public")));
