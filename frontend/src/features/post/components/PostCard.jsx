@@ -2,7 +2,6 @@
 // Renders a single post using real API data.
 // Passes postId down to PostActions for like handling.
 
-import { motion } from "framer-motion";
 import PostHeader from "../../dashboard/components/PostHeader";
 import PostImage from "../../dashboard/components/PostImage";
 import PostActions from "../../dashboard/components/PostActions";
@@ -33,7 +32,7 @@ function PostCard({ post = {} }) {
     : "";
 
   return (
-    <motion.article 
+    <article 
       className="bg-black border-b border-gray-700 mb-0 pb-1"
       whileHover={{ scale: 1.005 }}
       transition={{ duration: 0.2 }}
@@ -54,7 +53,7 @@ function PostCard({ post = {} }) {
         caption={caption}
         timestamp={timestamp}
       />
-    </motion.article>
+    </article>
   );
 }
 

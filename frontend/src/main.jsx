@@ -6,7 +6,6 @@ import { AuthProvider } from "./features/auth/context/AuthProvider";
 
 createRoot(document.getElementById('root')).render(
   <AuthProvider>
-
     <App />
   </AuthProvider>
 

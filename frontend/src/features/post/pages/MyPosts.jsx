@@ -1,9 +1,10 @@
 
 
 import { useEffect } from "react";
-import { motion, AnimatePresence } from "framer-motion";
+
 import { usePost } from "../hooks/usePost";
 import { Trash2 } from "lucide-react";
+import { AnimatePresence } from "framer-motion";
 
 function MyPosts() {
   const { posts, loading, handleGetMyPosts ,handleDeletePost} = usePost();
@@ -24,7 +25,7 @@ function MyPosts() {
 
 
   return (
-    <motion.div
+    <div
       initial={{ opacity: 0 }}
       animate={{ opacity: 1 }}
       exit={{ opacity: 0 }}
@@ -46,7 +47,7 @@ function MyPosts() {
 
           {!loading && posts && posts.length > 0 &&
             posts.map((post, index) => (
-              <motion.div
+              <div
                 key={post._id}
                 initial={{ opacity: 0, scale: 0.9 }}
                 animate={{ opacity: 1, scale: 1 }}
@@ -61,12 +62,12 @@ function MyPosts() {
                 <button className="bg-none border-none text-red-900 cursor-pointer p-1.5 rounded-lg flex items-center justify-center transition-all duration-150 hover:opacity-70 active:scale-85 leading-none absolute top-0 right-0" type="button" onClick={() => handleDelete(post._id)}>
                   <Trash2 size={20} />
                 </button>
-              </motion.div>
+              </div>
             ))
           }
 
           {!loading && (!posts || posts.length === 0) && (
-            <motion.div
+            <div
               className="col-span-3 flex flex-col items-center justify-center px-6 py-20 text-gray-400 text-center"
               initial={{ opacity: 0, y: 10 }}
               animate={{ opacity: 1, y: 0 }}
@@ -74,11 +75,11 @@ function MyPosts() {
               <div className="text-6xl mb-4 opacity-50">📸</div>
               <h2 className="text-2xl font-semibold text-gray-200 mb-2">No posts yet</h2>
               <p className="text-sm text-gray-500">Share your first photo to get started.</p>
-            </motion.div>
+            </div>
           )}
         </AnimatePresence>
       </div>
-    </motion.div>
+    </div>
   );
 }
 

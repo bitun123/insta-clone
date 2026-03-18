@@ -1,7 +1,8 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { motion, AnimatePresence } from "framer-motion";
+
 import { usePost } from "../hooks/usePost";
+import { AnimatePresence } from "framer-motion";
 
 function CreatePost() {
   const { handleCreatePost, loading } = usePost();
@@ -26,7 +27,7 @@ function CreatePost() {
   };
 
   return (
-    <motion.div 
+    <div 
       initial={{ opacity: 0, x: -20 }}
       animate={{ opacity: 1, x: 0 }}
       transition={{ duration: 0.4 }}
@@ -42,7 +43,7 @@ function CreatePost() {
           <label className={`flex flex-col items-center justify-center border-2 border-dashed border-gray-600 rounded-3xl p-8 cursor-pointer mb-5 min-h-72 overflow-hidden relative transition-all ${preview ? "bg-transparent" : "bg-gray-950"}`}>
             <AnimatePresence mode="wait">
               {preview ? (
-                <motion.img
+                <img
                   key="preview"
                   initial={{ opacity: 0, scale: 0.9 }}
                   animate={{ opacity: 1, scale: 1 }}
@@ -52,7 +53,7 @@ function CreatePost() {
                   className="w-full rounded-2xl object-cover"
                 />
               ) : (
-                <motion.div 
+                <div 
                   key="placeholder"
                   initial={{ opacity: 0 }}
                   animate={{ opacity: 1 }}
@@ -64,7 +65,7 @@ function CreatePost() {
                     Click to select a photo
                   </p>
                   <p className="text-xs mt-1">JPG, PNG, GIF</p>
-                </motion.div>
+                </div>
               )}
             </AnimatePresence>
             <input
@@ -85,7 +86,7 @@ function CreatePost() {
           />
 
           {/* Submit */}
-          <motion.button
+          <button
             whileHover={{ scale: 1.02 }}
             whileTap={{ scale: 0.98 }}
             type="submit"
@@ -97,10 +98,10 @@ function CreatePost() {
             }`}
           >
             {loading ? "Sharing…" : "Share"}
-          </motion.button>
+          </button>
         </form>
       </div>
-    </motion.div>
+    </div>
   );
 }
 

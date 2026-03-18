@@ -1,20 +1,17 @@
-// Dashboard — PostActions Component
-// Like button wired to handleLike/Unlike via usePost hook with animations.
+
 
 import { useState, useContext } from "react";
 import { Heart, MessageCircle, Send, Bookmark, Smile } from "lucide-react";
-import { motion } from "framer-motion";
 import { usePost } from "../../post/hooks/usePost";
 import { DashboardContext } from "../context/dashboardContext";
 import CommentsPopUp from "./CommentsPopUp";
 
 function PostActions({ postId, likes = 0, username, caption, timestamp = "", isLikedByMe = false }) {
   const { handleLikePost, handleUnlikePost } = usePost();
-  // const { setShowCommentsPopup } = useContext(DashboardContext);
-  
-  // Optimistic UI state
+  const { setShowCommentsPopup } = useContext(DashboardContext);
   const [isLiked, setIsLiked] = useState(isLikedByMe);
   const [likeCount, setLikeCount] = useState(likes);
+
 
   const onLikeClick = () => {
     if (!postId) return;
@@ -33,58 +30,45 @@ function PostActions({ postId, likes = 0, username, caption, timestamp = "", isL
   return (
     <div>
       {/* Action Buttons */}
-      <div className="flex items-center justify-between px-3 pt-2 pb-1">
-        <div className="flex items-center gap-2">
-          <motion.button 
+      <div className="flex items-center justify-between px-2 sm:px-3 pt-2 pb-1">
+        <div className="flex items-center gap-1.5 sm:gap-2">
+          <button 
             className={`bg-none border-none text-gray-200 cursor-pointer p-1.5 rounded-lg flex items-center justify-center transition-all duration-150 hover:opacity-70 active:scale-85 leading-none ${isLiked ? "text-red-500" : ""}`} 
             type="button" 
             onClick={onLikeClick}
-            whileTap={{ scale: 0.8, rotate: isLiked ? 0 : -10 }}
-            whileHover={{ scale: 1.1 }}
-            transition={{ type: "spring", stiffness: 400, damping: 17 }}
           >
-            <Heart size={24} fill={isLiked ? "#ff3040" : "none"} />
-          </motion.button>
-          <button className="bg-none border-none text-gray-200 cursor-pointer p-1.5 rounded-lg flex items-center justify-center transition-all duration-150 hover:opacity-70 active:scale-85 leading-none" type="button">
-            <MessageCircle size={24} />
+            <Heart size={20} className="sm:w-6 sm:h-6" fill={isLiked ? "#ff3040" : "none"} />
+          </button>
+          <button className="bg-none border-none text-gray-200 cursor-pointer p-1.5 rounded-lg flex items-center justify-center transition-all duration-150 hover:opacity-70 active:scale-85 leading-none" type="button" onClick={() => setShowCommentsPopup(true)}>
+            <MessageCircle size={20} className="sm:w-6 sm:h-6" />
           </button>
           <button className="bg-none border-none text-gray-200 cursor-pointer p-1.5 rounded-lg flex items-center justify-center transition-all duration-150 hover:opacity-70 active:scale-85 leading-none" type="button">
-            <Send size={24} />
+            <Send size={20} className="sm:w-6 sm:h-6" />
           </button>
         </div>
         <button className="bg-none border-none text-gray-200 cursor-pointer p-1.5 rounded-lg flex items-center justify-center transition-all duration-150 hover:opacity-70 active:scale-85 leading-none" type="button">
-          <Bookmark size={24} />
+          <Bookmark size={20} className="sm:w-6 sm:h-6" />
         </button>
       </div>
 
       {/* Likes */}
-      <div className="px-4 py-0.5 text-sm font-semibold text-gray-100">{likeCount} {likeCount === 1 ? "like" : "likes"}</div>
+      <div className="px-2 sm:px-3 md:px-4 py-0.5 text-xs sm:text-sm font-semibold text-gray-100">{likeCount} {likeCount === 1 ? "like" : "likes"}</div>
 
       {/* Caption */}
       {caption && (
-        <div className="px-4 py-1 text-sm text-gray-200 leading-relaxed">
-          <span className="font-semibold text-sm text-gray-100 cursor-pointer hover:underline">{username}</span>&nbsp;
+        <div className="px-2 sm:px-3 md:px-4 py-1 text-xs sm:text-sm md:text-base text-gray-200 leading-relaxed">
+          <span className="font-semibold text-xs sm:text-sm md:text-base text-gray-100 cursor-pointer hover:underline">{username}</span>&nbsp;
           {caption}
         </div>
       )}
 
       {/* Timestamp */}
-      {timestamp && <div className="px-4 pb-2 text-xs text-gray-600 uppercase tracking-wider">{timestamp}</div>}
+      {timestamp && <div className="px-2 sm:px-3 md:px-4 pb-2 text-xs text-gray-600 uppercase tracking-wider">{timestamp}</div>}
 
       {/* Add Comment */}
-        <CommentsPopUp  />
-      <div className="flex items-center gap-2.5 px-4 pb-3 border-t pt-2 border-gray-800">
-        <Smile size={18} className="text-gray-600 flex-shrink-0" />
-        <input
-          type="text"
-          placeholder="Add a comment…"
-          className="flex-1 bg-none border-none outline-none text-sm text-gray-200 placeholder:text-gray-600"
-        
-        />
-        
-        <button className="bg-none border-none text-blue-500 text-sm font-semibold cursor-pointer p-0" type="button">Post</button>
-      </div>
-    
+      
+
+      <CommentsPopUp />
     </div>
   );
 }

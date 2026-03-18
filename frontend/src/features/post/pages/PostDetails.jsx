@@ -3,7 +3,6 @@
 
 import { useEffect } from "react";
 import { useParams } from "react-router-dom";
-import { motion } from "framer-motion";
 import { usePost } from "../hooks/usePost";
 import PostHeader from "../../dashboard/components/PostHeader";
 import PostImage from "../../dashboard/components/PostImage";
@@ -31,7 +30,7 @@ function PostDetails() {
     : "";
 
   return (
-    <motion.div 
+    <div 
       initial={{ opacity: 0, y: 2.5 }}
       animate={{ opacity: 1, y: 0 }}
       transition={{ duration: 0.4 }}
@@ -45,7 +44,7 @@ function PostDetails() {
         {loading && <PostSkeleton />}
 
         {!loading && post && (
-          <motion.article 
+          <article 
             className="bg-black border-b border-gray-700 mb-0 pb-1"
             initial={{ scale: 0.98, opacity: 0 }}
             animate={{ scale: 1, opacity: 1 }}
@@ -66,7 +65,7 @@ function PostDetails() {
               caption={caption}
               timestamp={timestamp}
             />
-          </motion.article>
+          </article>
         )}
 
         {!loading && !post && (
@@ -77,7 +76,7 @@ function PostDetails() {
           </div>
         )}
       </div>
-    </motion.div>
+    </div>
   );
 }
 
