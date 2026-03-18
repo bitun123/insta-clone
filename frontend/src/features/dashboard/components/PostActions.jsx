@@ -1,13 +1,16 @@
 // Dashboard — PostActions Component
 // Like button wired to handleLike/Unlike via usePost hook with animations.
 
-import { useState } from "react";
+import { useState, useContext } from "react";
 import { Heart, MessageCircle, Send, Bookmark, Smile } from "lucide-react";
 import { motion } from "framer-motion";
 import { usePost } from "../../post/hooks/usePost";
+import { DashboardContext } from "../context/dashboardContext";
+import CommentsPopUp from "./CommentsPopUp";
 
 function PostActions({ postId, likes = 0, username, caption, timestamp = "", isLikedByMe = false }) {
   const { handleLikePost, handleUnlikePost } = usePost();
+  // const { setShowCommentsPopup } = useContext(DashboardContext);
   
   // Optimistic UI state
   const [isLiked, setIsLiked] = useState(isLikedByMe);
@@ -69,6 +72,7 @@ function PostActions({ postId, likes = 0, username, caption, timestamp = "", isL
       {timestamp && <div className="px-4 pb-2 text-xs text-gray-600 uppercase tracking-wider">{timestamp}</div>}
 
       {/* Add Comment */}
+        <CommentsPopUp  />
       <div className="flex items-center gap-2.5 px-4 pb-3 border-t pt-2 border-gray-800">
         <Smile size={18} className="text-gray-600 flex-shrink-0" />
         <input
@@ -77,8 +81,10 @@ function PostActions({ postId, likes = 0, username, caption, timestamp = "", isL
           className="flex-1 bg-none border-none outline-none text-sm text-gray-200 placeholder:text-gray-600"
         
         />
+        
         <button className="bg-none border-none text-blue-500 text-sm font-semibold cursor-pointer p-0" type="button">Post</button>
       </div>
+    
     </div>
   );
 }

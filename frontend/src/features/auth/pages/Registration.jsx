@@ -10,13 +10,13 @@ function Registration() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
 
-  if (loading) {
-    return (
-      <div className="w-full h-screen bg-black flex items-center justify-center">
-        <h1 className="text-white text-2xl">Loading...</h1>
-      </div>
-    );
-  }
+  // if (loading) {
+  //   return (
+  //     <div className="w-full h-screen bg-black flex items-center justify-center">
+  //       <h1 className="text-white text-2xl">Loading...</h1>
+  //     </div>
+  //   );
+  // }
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -79,7 +79,14 @@ function Registration() {
               type="submit"
               className="w-full bg-blue-500 hover:bg-blue-600 text-white font-semibold py-2 rounded-md mt-2 active:scale-98 cursor-pointer transition duration-200"
             >
-              Sign up
+              {loading ? (
+                <>
+                  <span className=" inline-block animate-spin">⚙️</span>
+                  Signing up...
+                </>
+              ) : (
+                'Sign Up'
+              )}
             </button>
           </form>
 
